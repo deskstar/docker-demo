@@ -11,17 +11,8 @@ node {
        sh 'npm test'
      }
    }
-   stage('CLI workaround') {
-    /* Workaround to address issue with credentials stored in Jenkins not
-    * being passed correctly to the docker registry
-    * - ref https://issues.jenkins-ci.org/browse/JENKINS-38018 */
-    withCredentials([[$class: 'UsernamePasswordMultiBinding', credentialsId: 'dockerhub',
-    usernameVariable: 'USERNAME', passwordVariable: 'PASSWORD']]) {
-    sh 'docker login -u $USERNAME -p $PASSWORD https://index.docker.io/v2/'
-    }
-   }
    stage('docker build/push') {
-     docker.withRegistry('https://index.docker.io/v2/', 'dockerhub') {
+     docker.withRegistry('https://index.docker.io/v2/', 'abc') {
        def app = docker.build("johnnyfifi/jenkins-docker-example:${commit_id}", '.').push()
      }
    }
