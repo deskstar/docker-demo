@@ -12,7 +12,7 @@ node {
      }
    }
    stage('docker build/push') {
-     docker.withRegistry('https://index.docker.io/v2/', 'abc') {
+     docker.withRegistry('https://index.docker.io/v2/', 'def') {
        def app = docker.build("johnnyfifi/jenkins-docker-example:${commit_id}", '.').push()
      }
    }
