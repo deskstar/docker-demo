@@ -11,9 +11,9 @@ node {
        sh 'npm test'
      }
    }
-   stage('docker build/push') {
-     docker.withRegistry('https://index.docker.io/v1/', 'def') {
-       def app = docker.build("johnnyfifi/jenkins-docker-example:${commit_id}", '.').push()
+   stage('Push image') {
+        withDockerRegistry([ credentialsId: "def", url: "" ]) {
+        bat "docker push johnnyfifi/jenkins-docker-example:${commit_id}"
      }
-   }
+   }  
 }
